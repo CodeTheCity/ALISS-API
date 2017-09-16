@@ -5,7 +5,9 @@ const parse = json => {
 
     return json.results.map(item => {
         return {
+            _service: 'aliss',
             title: item.title,
+            description: item.description,
         }
     });
 };

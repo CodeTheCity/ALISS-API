@@ -20,6 +20,13 @@ app.get('/search', function(req, res){
 	}
 });
 
+app.get('/details/:service/:id', function(req, res){
+	db.details(req.params.service, req.params.id, function(details){
+		res.type('json');
+		res.send(JSON.stringify(details));
+	});
+});
+
 app.listen(PORT,function(){
 	console.log('Server listening on port '+PORT);
 });
