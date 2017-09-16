@@ -1,4 +1,4 @@
-const PORT= process.env.PORT || 80;
+const PORT=process.env.PORT || 3000;
 const express = require('express');
 const app = express();
 const db = require('./db.js');
@@ -14,6 +14,7 @@ app.get('/search', function(req, res){
 		console.log("Query: "+q);
 		db.query(q,function(services){
 			var aggregation=parser.aggregateServices(services);
+			res.type('json');
 			res.send(JSON.stringify(aggregation));
 		});
 	}
