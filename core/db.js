@@ -48,7 +48,7 @@ module.exports={
 		var race=new Race(function(){
 			// All queries have finished
 			console.log('All queries finished!');
-			fs.writeFileSync('results.json',JSON.stringify(results));
+			callback(results);
 		});
 
 		race.start(function(finish){
