@@ -41,7 +41,47 @@ Race.prototype={
 	}
 };
 
+var services={
+	'aliss':{
+		getDetails:function(id,callback){
+			callback({});
+		}
+	},
+	'milo':{
+		getDetails:function(id,callback){
+			https.get({
+				path:"/web-content/milo-organisation/"+id,
+				hostname:"50896fdf5c15388f8976945e5582a856.eu-west-1.aws.found.io",
+				method:"GET",
+				headers:{
+					'Authorization':"Basic cmVhZG9ubHk6b25seXJlYWQ="
+				}
+			},function(res){
+				console.log('Status '+res.statusCode);
+				console.log('Headers '+JSON.stringify(res.headers));
+				let data='';
+				res.on('data',function(chunk){
+					data+=chunk;
+				});
+				res.on('end',function(){
+					try{
+						callback(JSON.parse(data));
+					}
+					catch(err){
+						console.error('MILO error: '+err);
+					}
+				});
+			});
+		}
+	}
+};
+
 module.exports={
+	details:function(service,id,callback){
+		if (service in services){
+			services[service].getDetails(id,callback);
+		}else console.error('Cannot get details; service \''+service+'\' not in services!');
+	},
 	query:function(query,callback){
 		var results={};
 
