@@ -16,8 +16,6 @@ module.exports={
 			return clean;
 		});
 
-		console.log(milo);
-
 		return milo;
 	}
 };
