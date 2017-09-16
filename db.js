@@ -18,7 +18,6 @@
  * */
 
 const http=require('http'),https=require('https');
-const fs=require('fs');
 
 function Race(callback){
 	this.running=0;
@@ -45,6 +44,29 @@ var services={
 	'aliss':{
 		getDetails:function(id,callback){
 			callback({});
+		},
+		query:function(query,callback){
+			https.get({
+				path:"/api/v2/search/?q="+encodeURIComponent(query),
+				hostname:"www.aliss.org",
+				method:"GET",
+				headers:{}
+			},function(res){
+				console.log('Status '+res.statusCode);
+				console.log('Headers '+JSON.stringify(res.headers));
+				let data='';
+				res.on('data',function(chunk){
+					data+=chunk;
+				});
+				res.on('end',function(){
+					try{
+						callback(JSON.parse(data));
+					}
+					catch(err){
+						console.error('ALISS error: '+err);
+					}
+				});
+			});
 		}
 	},
 	'milo':{
@@ -72,6 +94,53 @@ var services={
 					}
 				});
 			});
+		},
+		query:function(query,callback){
+			var request=https.request({
+				path:"/web-content/milo-organisation/_search",
+				hostname:"50896fdf5c15388f8976945e5582a856.eu-west-1.aws.found.io",
+				method:"POST",
+				headers:{
+					'Authorization':"Basic cmVhZG9ubHk6b25seXJlYWQ=",
+					"Content-Type":"application/json"
+				}
+			},function(res){
+				console.log('Status '+res.statusCode);
+				console.log('Headers '+JSON.stringify(res.headers));
+				let data='';
+				res.on('data',function(chunk){
+					data+=chunk;
+				});
+				res.on('end',function(){
+					try{
+						callback(JSON.parse(data));
+					}
+					catch(err){
+						console.error('MILO error: '+err);
+					}
+				});
+			});
+
+			request.on('error',function(err){
+				console.log('MILO request error: '+err);
+			});
+
+			var json={
+				from:0,
+				query:{
+					bool:{
+						must:[{
+							simple_query_string:{
+								query:query,
+								default_operator:"AND"
+							}
+						}]
+					}
+				}
+			};
+
+			request.write(JSON.stringify(json));
+			request.end();
 		}
 	}
 };
@@ -86,70 +155,20 @@ module.exports={
 		var results={};
 
 		var race=new Race(function(){
-			// All queries have finished
+			// All queries have finished on race finish
 			console.log('All queries finished!');
 			callback(results);
 		});
 
-		race.start(function(finish){
-			// ALISS
-			https.get({
-				path:"/api/v2/search/?q="+query,
-				hostname:"www.aliss.org",
-				method:"GET",
-				headers:{}
-			},function(res){
-				console.log('Status '+res.statusCode);
-				console.log('Headers '+JSON.stringify(res.headers));
-				let data='';
-				res.on('data',function(chunk){
-					data+=chunk;
-				});
-				res.on('end',function(){
-					try{
-						results.aliss=JSON.parse(data);
-					}
-					catch(err){
-						console.error('ALISS error: '+err);
-					}
+		for (let service in services){
+			console.log('Querying service '+service+'...');
+			race.start(function(finish){
+				services[service].query(query,function(res){
+					results[service]=res;
+					console.log('Service '+service+' finished.');
 					finish();
 				});
 			});
-		});
-
-		race.start(function(finish){
-			// MILO
-			https.get({
-				path:"/web-content/milo-organisation/_search?q="+query,
-				hostname:"50896fdf5c15388f8976945e5582a856.eu-west-1.aws.found.io",
-				method:"GET",
-				headers:{
-					'Authorization':"Basic cmVhZG9ubHk6b25seXJlYWQ="
-				}
-			},function(res){
-				console.log('Status '+res.statusCode);
-				console.log('Headers '+JSON.stringify(res.headers));
-				let data='';
-				res.on('data',function(chunk){
-					data+=chunk;
-				});
-				res.on('end',function(){
-					try{
-						results.milo=JSON.parse(data);
-					}
-					catch(err){
-						console.error('MILO error: '+err);
-					}
-					finish();
-				});
-			});
-		});
-
-		race.start(function(finish){
-			// GCD
-			// TODO
-			results.gcd=null;
-			finish();
-		});
+		}
 	}
 };

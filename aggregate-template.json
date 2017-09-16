@@ -1,0 +1,25 @@
+{
+	"_id":"service_specific_id",
+	"_service":"aliss",
+	"title":"Lorem Ipsum",
+	"description":"Lorem ipsum dolor sit amet",
+	"additionalInformation":"loremmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+	"tags":["elderly","help"],
+	"contact":{
+		"email":"lorem.ipsum@dolor.tld",
+		"phone":"+44000000000",
+		"facebook":"",
+		"twitter":"",
+		"website":"http://lorem.ipsum.dolor.tld/"
+	},
+	"location":{
+		"coordinates":{
+			"latitude":4,
+			"longitude":4
+		},
+		"postcode":"",
+		"street":"",
+		"city":"",
+		"country":""
+	}
+}

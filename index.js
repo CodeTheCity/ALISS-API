@@ -4,7 +4,7 @@ const app = express();
 const db = require('./db.js');
 const parser = require('./parser.js');
 
-app.get('/',function(req,res){
+app.get('/',function(req, res){
 	res.send('REST /');
 });
 
@@ -12,7 +12,7 @@ app.get('/search', function(req, res){
 	if (req.query.q){
 		let q=req.query.q;
 		console.log("Query: "+q);
-		db.query(q,function(services){
+		db.query(q, function(services){
 			var aggregation=parser.aggregateServices(services);
 			res.type('json');
 			res.send(JSON.stringify(aggregation));
@@ -27,6 +27,6 @@ app.get('/details/:service/:id', function(req, res){
 	});
 });
 
-app.listen(PORT,function(){
+app.listen(PORT, function(){
 	console.log('Server listening on port '+PORT);
 });
