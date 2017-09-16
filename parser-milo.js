@@ -1,17 +1,23 @@
 module.exports={
 	parse:function(milo){
-		console.log(milo);
-		if ('hits' in milo){
-			console.log('MILO results: '+milo.hits.total);
-			var hits=milo.hits.hits;
-		}else{
+		if (!('hits' in milo)){
 			console.warn('No results from MILO');
+			return [];
 		}
-		return [milo];
+
+		console.log('MILO results: '+milo.hits.total);
+		milo=milo.hits.hits;
+
+		milo=milo.map(function(item){
+			var clean={};
+
+			if ('_source' in item&&'title' in item._source) clean.title=item._source.title;
+
+			return clean;
+		});
+
+		console.log(milo);
+
+		return milo;
 	}
 };
-
-const fs=require('fs');
-
-var milo=JSON.parse(fs.readFileSync('milo.json'));
-module.exports.parse(milo);

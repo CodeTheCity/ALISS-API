@@ -3,7 +3,7 @@ const milo=require('./parser-milo.js'),aliss=require('./parser-aliss.js'),gcd=re
 var parsers={
 	'milo':milo,
 	'aliss':aliss,
-	'gcd':gcd
+	//'gcd':gcd
 };
 
 module.exports={
