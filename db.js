@@ -98,7 +98,7 @@ module.exports={
 						results.milo=JSON.parse(data);
 					}
 					catch(err){
-						console.error('ALISS error: '+err);
+						console.error('MILO error: '+err);
 					}
 					finish();
 				});
