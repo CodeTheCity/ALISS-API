@@ -67,7 +67,11 @@ module.exports={
 				});
 				res.on('end',function(){
 					try{
-						results.aliss=JSON.parse(data);
+						var res=JSON.parse(data);
+						if ('results' in res){
+							console.log('ALISS results: '+res.count);
+							results.aliss=res.results;
+						}
 					}
 					catch(err){
 						console.error('ALISS error: '+err);
@@ -95,10 +99,16 @@ module.exports={
 				});
 				res.on('end',function(){
 					try{
-						results.milo=JSON.parse(data);
+						var res=JSON.parse(data);
+						if ('hits' in res){
+							console.log('MILO results: '+res.hits.count);
+							results.milo=res.hits.hits;
+						}else{
+							console.warn('No results from MILO');
+						}
 					}
 					catch(err){
-						console.error('ALISS error: '+err);
+						console.error('MILO error: '+err);
 					}
 					finish();
 				});
