@@ -26,8 +26,8 @@ const parse = json => {
                 "phone": (function(string){
 			// Try to find a phone number from this string
 			var phone=null;
-			string.replace(/(tel(ephone)?|phone)\s*:?\s*((\+\d{1,3}|0)[\d\s]{5,18})/gi,function(...matches){
-				phone=include(phone,matches[3].trim()); // 3rd group
+			string.replace(/((\+\d{1,3}|0)?[\d\s]{5,18})/gi,function(...matches){
+				phone=include(phone,matches[1].trim()); // first group
 			});
 			return phone;
 		})(item.description),

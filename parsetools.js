@@ -29,6 +29,7 @@ function include(oldval,newval){
 			// Mismatch! Add value to set (create one if there isn't already one.)
 			if (type(oldval)!=='enumerable') oldval=[oldval];
 			oldval.push(newval);
+			return oldval;
 		}else{
 			// They're the same, return oldval
 			return oldval;
