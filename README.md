@@ -8,3 +8,6 @@ http://codethecity-aggregator-api.azurewebsites.net/search?q=[QUERY]
 
 
 hosted demo site at http://www.aboynejames.co.uk/codethecity/linkedservices/
+
+## Links
+- Aliss source code and documentation: https://github.com/aliss/engine
