@@ -4,10 +4,10 @@ module.exports = {
     },
     query:function(qo,callback){
         var query=qo.query,area=qo.area;
-        const path = "/api/v2/search/?q="+encodeURIComponent(query);
+        let path = "/api/v2/search/?q="+encodeURIComponent(query);
 
         if(area){
-            // TODO
+            path += `&latitude=${area.lat}&longitude=${area.lon}&distance=${area.distance}`;
         }
 
         https.get({
