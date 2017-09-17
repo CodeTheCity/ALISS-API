@@ -45,6 +45,14 @@ text: bold
 color: white;
 }
 
+.resultTop {
+margin: 20px;
+color: white;
+}
+
+.resultTop .resultsTitle {
+font-size: 300%;
+} 
 /* start editing from here */
 a{text-decoration:none;}
 .txt-rt{text-align:right;}/* text align right */
