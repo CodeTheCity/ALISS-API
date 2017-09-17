@@ -15,3 +15,4 @@ hosted demo site at http://www.aboynejames.co.uk/codethecity/linkedservices/
 
 ## Other ideas
 - Return "where to get there" information for locations, for example using google maps navigation
+- Add pictures of the building (next to the map?) to make it easier to find
