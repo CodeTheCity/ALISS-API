@@ -11,6 +11,40 @@ ol,ul{list-style:none;margin:0;padding:0;}
 blockquote,q{quotes:none;}
 blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
 table{border-collapse:collapse;border-spacing:0;}
+/* results formatting */
+#results {
+display: none;
+border-style: solid;
+border-color: red;
+border-width: 2px;
+}
+
+.resultsItem {
+border-style: solid;
+border-color: pink;
+border-width: 2px;
+}
+
+.resultsTitle {
+text-align: center;
+
+}
+
+.resultsDesc {
+text-align: justify;
+
+}
+
+.resultsDesc header {
+text: bold
+
+}
+
+#linked-results {
+
+color: white;
+}
+
 /* start editing from here */
 a{text-decoration:none;}
 .txt-rt{text-align:right;}/* text align right */

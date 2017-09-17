@@ -23,13 +23,12 @@ console.log(idclick);
         var URLin = LinkAPI.aggregator + idclick;
 console.log(URLin);
         var data;
-        $.get("https://www.aliss.org/api/v2/search/?q=", function(data) {
+        $.get(URLin, function(data) {
 console.log('get data');
 console.log(data);
           aggResults = data;
-        // extract the information and make available to UI
-//console.log(aggResults);
-        //dataExtractionCondition(liveALISSresults);
+          //extract information and make available to UI
+	  formatResults(aggResults);
 
         });
 
@@ -46,6 +45,49 @@ console.log(data);
 		}
 
 	});
+  function formatResults(aggResults) {
+console.log('function called');
+    var resultsUI = '';
+    var count = 0;
+      resultsUI += '<section id="linked-results">';
 
+      aggResults.forEach(function(extractItems) {
+ //console.log(extractItems);
+      count++;
+
+         
+      var itemsDiv = "count-" + count;
+      resultsUI += '<div class="resultsItem" id="' + itemsDiv + '">';
+      resultsUI += '<div class="resultsTitle">' + extractItems.title + '</div>';
+      resultsUI += '<div class="resultsDesc">';
+      resultsUI += '<div>' + extractItems.description;
+      resultsUI += '</div>';
+      resultsUI += '</div>';
+      
+      resultsUI += '<div id="location">';
+  
+      var locationInfo = extractItems.locations;
+
+      var location2 = locationInfo[0];            
+      locationInfo.forEach(function(extractLocation) {
+            if(extractLocation.address) {
+                 resultsUI += '<div>' + extractLocation.address + '</div>';
+                 }
+            if(extractLocation.postcode) {
+                 resultsUI += '<div>' + extractLocation.postcode + '</div>';
+                 }
+    });
+ 
+
+      resultsUI += '</div>';
+      resultsUI += '</div>';
+ 
+      });
+
+      resultsUI += '</section>';
+      $("#results").show();
+      //console.log(resultsUI);
+      $("#results").html(resultsUI);
+  };
 
 });  // closes Jquery
