@@ -12,7 +12,12 @@ module.exports={
 		for (let service in json){
 			console.log('Service '+service+'...');
 			if (service in parsers){
-				Array.prototype.push.apply(services,parsers[service].parse(json[service]));
+				try{
+					Array.prototype.push.apply(services,parsers[service].parse(json[service]));
+				}
+				catch(err){
+					console.error(err);
+				}
 			}else console.warn('No parser found for service \''+service+'\'!');
 		}
 		return services;
