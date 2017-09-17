@@ -7,7 +7,7 @@ module.exports = {
         let path = "/api/v2/search/?q="+encodeURIComponent(query);
 
         if(area){
-            path += `latitude=${area.lat}&longitude=${area.lon}&distance=${area.distance}`;
+            path += `&latitude=${area.lat}&longitude=${area.lon}&distance=${area.distance}`;
         }
 
         https.get({
