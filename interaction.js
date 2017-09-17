@@ -50,7 +50,7 @@ console.log('function called');
     var resultsUI = '';
     var count = 0;
       resultsUI += '<section id="linked-results">';
-
+      var topItem = aggResults.shift();
       aggResults.forEach(function(extractItems) {
  //console.log(extractItems);
       count++;
@@ -88,6 +88,32 @@ console.log('function called');
       $("#results").show();
       //console.log(resultsUI);
       $("#results").html(resultsUI);
+      
+
+      
+      var resultTop = '';
+      
+      resultTop += '<div class="resultTop">';
+      resultTop += '<div class="resultsTitle">' + topItem.title + '</div>';
+      resultTop += '<div class="resultsDesc">';
+      resultTop +=  topItem.description;
+      resultTop += '</div>';
+       
+      
+      var locationInfo = topItem.locations;
+
+      var location2 = locationInfo[0];            
+      locationInfo.forEach(function(extractLocation) {
+            if(extractLocation.address) {
+                 resultTop += '<div>' + extractLocation.address + '</div>';
+                 }
+            if(extractLocation.postcode) {
+                 resultTop += '<div>' + extractLocation.postcode + '</div>';
+                 }
+    });
+      resultTop += '</div>';
+
+      $("#topResult").html(resultTop);
   };
 
 });  // closes Jquery
