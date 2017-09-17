@@ -12,6 +12,7 @@ hosted demo site at http://www.aboynejames.co.uk/codethecity/linkedservices/
 
 ## Proposed improvements
 - Search by event date (not supported by any of the database API's at the moment)
+- Sort results by distance from the given coordinates
 
 ## Other ideas
 - Return "where to get there" information for locations, for example using google maps navigation
