@@ -1,3 +1,5 @@
+const tool=require('./parsetools.js'),type=tool.type,include=tool.include;
+
 const parse = json => {
     if (!json.results) {
         return [];
@@ -12,8 +14,23 @@ const parse = json => {
             "additionalInformation": null,
             "tags": [],
             "contact": {
-                "email": null,
-                "phone": null,
+                "email": (function(string){
+			// Try to find emails from this string
+			
+			var email=null;
+			string.replace(/([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,})/gi,function(...matches){
+				email=include(email,matches[0].trim());
+			});
+			return email;
+		})(item.description),
+                "phone": (function(string){
+			// Try to find a phone number from this string
+			var phone=null;
+			string.replace(/(tel(ephone)?|phone)\s*:?\s*((\+\d{1,3}|0)[\d\s]{5,18})/gi,function(...matches){
+				phone=include(phone,matches[3].trim()); // 3rd group
+			});
+			return phone;
+		})(item.description),
                 "facebook": null,
                 "twitter": null,
                 "website": item.uri
