@@ -24,15 +24,16 @@ app.get('/search', function(req, res){
 		});
 	}
 
+	if (!req.query.distance) req.query.distance=5;
 	if (req.query.lat&&req.query.lon){
-		queryobject.area={lat:req.query.lat,lon:req.query.lon,distance:req.query.distance||5};
+		queryobject.area={lat:req.query.lat,lon:req.query.lon,distance:req.query.distance};
 	}
 	if (req.query.q){
 		queryobject.query=req.query.q;
 	}
 	if (req.query.postcode){
 		db.getPostcode(req.query.postcode,function(data){
-			queryobject.area={lat:data.latitude,lon:data.longitude,distance:req.query.distance||5};
+			queryobject.area={lat:data.latitude,lon:data.longitude,distance:req.query.distance};
 			search(queryobject);
 		});
 	}else search(queryobject);
