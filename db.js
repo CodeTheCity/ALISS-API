@@ -188,6 +188,22 @@ var services={
 				}
 			};
 
+			if (area){
+				// Search by location
+				//
+				json.sort={
+					geo_distance:{
+						coords:{
+							lat:area.lat,
+							lon:area.lon
+						}
+					},
+					distance_type:"arc",
+					order:"asc",
+					unit:"mi"
+				};
+			}
+
 			request.write(JSON.stringify(json));
 			request.end();
 		}
@@ -200,7 +216,7 @@ module.exports={
 			services[service].getDetails(id,callback);
 		}else console.error('Cannot get details; service \''+service+'\' not in services!');
 	},
-	query:function(query, lat, lon, callback){
+	query:function(qo, callback){
 		var results={};
 
 		var race=new Race(function(){
@@ -212,7 +228,7 @@ module.exports={
 		for (let service in services){
 			console.log('Querying service '+service+'...');
 			race.start(function(finish){
-				services[service].query(query,lat,lon,function(res){
+				services[service].query(qo,function(res){
 					results[service]=res;
 					console.log('Service '+service+' finished.');
 					finish();
