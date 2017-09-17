@@ -11,7 +11,7 @@ app.get('/',function(req, res){
 app.get('/search', function(req, res){
 	// TODO: convert postcode to location
 	var queryobject={};
-	if (req.query.lat&&req.query.lon&&req.query.distance){
+	if (req.query.lat&&req.query.lon){
 		queryobject.area={lat:req.query.lat,lon:req.query.lon,distance:req.query.distance};
 	}
 	if (req.query.q){

@@ -191,16 +191,17 @@ var services={
 			if (area){
 				// Search by location
 				//
+				console.log('MILO: lat %s lon %s',area.lat,area.lon);
 				json.sort={
-					geo_distance:{
+					_geo_distance:{
 						coords:{
 							lat:area.lat,
 							lon:area.lon
-						}
-					},
-					distance_type:"arc",
-					order:"asc",
-					unit:"mi"
+						},
+						distance_type:"arc",
+						order:"asc",
+						unit:"mi"
+					}
 				};
 			}
 
