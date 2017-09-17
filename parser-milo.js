@@ -58,7 +58,7 @@ module.exports={
 								'longitude':longitude
 							},
 							'postcode':postcode,
-							'street':street,
+							'address':street,
 							'city':city,
 							'country':country
 						}];
@@ -68,6 +68,8 @@ module.exports={
 				console.warn('PARSER-MILO: No _source in '+item);
 			}
 		}
+
+		// TODO: Check for duplicates
 
 		return clean;
 	}

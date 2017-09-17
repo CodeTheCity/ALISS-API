@@ -50,7 +50,9 @@ var services={
 				path:"/api/v2/search/?q="+encodeURIComponent(query),
 				hostname:"www.aliss.org",
 				method:"GET",
-				headers:{}
+				headers:{
+					'Accept':'application/json'
+				}
 			},function(res){
 				console.log('Status '+res.statusCode);
 				console.log('Headers '+JSON.stringify(res.headers));
@@ -69,6 +71,39 @@ var services={
 			});
 		}
 	},
+	'gcd':{
+		getDetails:function(id,callback){
+			// TODO: this
+			callback({});
+		},
+		query:function(query,callback){
+			let page=1; //for now
+			http.get({
+				path:"/api/_search/"+encodeURIComponent(query)+"/"+page,
+				hostname:"devsalute-001-site4.etempurl.com",
+				method:"GET",
+				headers:{
+					'Accept':'application/json'
+				}
+			},function(res){
+				console.log('Status '+res.statusCode);
+				console.log('Headers '+JSON.stringify(res.headers));
+				let data='';
+				res.on('data',function(chunk){
+					data+=chunk;
+				});
+				res.on('end',function(){
+					try{
+						callback(JSON.parse(data));
+					}
+					catch(err){
+						console.error('GCD error: '+err);
+						callback({});
+					}
+				});
+			});
+		}
+	},
 	'milo':{
 		getDetails:function(id,callback){
 			https.get({
@@ -76,7 +111,8 @@ var services={
 				hostname:"50896fdf5c15388f8976945e5582a856.eu-west-1.aws.found.io",
 				method:"GET",
 				headers:{
-					'Authorization':"Basic cmVhZG9ubHk6b25seXJlYWQ="
+					'Authorization':"Basic cmVhZG9ubHk6b25seXJlYWQ=",
+					'Accept':'application/json'
 				}
 			},function(res){
 				console.log('Status '+res.statusCode);
@@ -91,6 +127,7 @@ var services={
 					}
 					catch(err){
 						console.error('MILO error: '+err);
+						callback({});
 					}
 				});
 			});
@@ -102,7 +139,7 @@ var services={
 				method:"POST",
 				headers:{
 					'Authorization':"Basic cmVhZG9ubHk6b25seXJlYWQ=",
-					"Content-Type":"application/json"
+					'Accept':'application/json'
 				}
 			},function(res){
 				console.log('Status '+res.statusCode);
@@ -117,6 +154,7 @@ var services={
 					}
 					catch(err){
 						console.error('MILO error: '+err);
+						callback({});
 					}
 				});
 			});
