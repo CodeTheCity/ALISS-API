@@ -45,10 +45,11 @@ var services={
 		getDetails:function(id,callback){
 			callback({});
 		},
-		query:function(query,lat,lon,callback){
+		query:function(qo,callback){
+			var query=qo.query,area=qo.area;
 			const path = "/api/v2/search/?q="+encodeURIComponent(query);
-			
-			if(lat && lon){
+
+			if(area){
 				// TODO
 			}
 
@@ -82,7 +83,9 @@ var services={
 			// TODO: this
 			callback({});
 		},
-		query:function(query,lat,lon,callback){
+		query:function(qo,callback){
+			var query=qo.query,area=qo.area;
+			
 			let page=1; //for now
 			http.get({
 				path:"/api/_search/"+encodeURIComponent(query)+"/"+page,
@@ -138,7 +141,9 @@ var services={
 				});
 			});
 		},
-		query:function(query,lat,lon,callback){
+		query:function(qo,callback){
+			var query=qo.query,area=qo.area;
+
 			var request=https.request({
 				path:"/web-content/milo-organisation/_search",
 				hostname:"50896fdf5c15388f8976945e5582a856.eu-west-1.aws.found.io",
