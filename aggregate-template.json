@@ -19,9 +19,7 @@
 				"longitude":4
 			},
 			"postcode":"",
-			"address":"",
-			"city":"",
-			"country":""
+			"address":""
 		}
 	]
 }

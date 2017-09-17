@@ -58,9 +58,7 @@ module.exports={
 								'longitude':longitude
 							},
 							'postcode':postcode,
-							'address':street,
-							'city':city,
-							'country':country
+							'address':[street,city,country].join(', ').trim()
 						}];
 					})(item)
 				});

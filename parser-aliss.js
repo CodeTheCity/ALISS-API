@@ -36,18 +36,13 @@ const parse = json => {
                 "website": item.uri
             },
             "locations": item.locations ? item.locations.map(location => {
-                [country, city, street] = location.formatted_address
-                    .split(',', 3).reverse();
-
                 return {
                     "coordinates": {
                         "latitude": location.lat,
                         "longitude": location.lon
                     },
                     "postcode": null,
-                    "street": street,
-                    "city": city,
-                    "country": country
+                    "address": location.formatted_address
                 };
             }) : [],
         }
