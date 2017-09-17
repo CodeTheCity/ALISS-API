@@ -4,11 +4,24 @@ module.exports = {
         callback({});
     },
     query:function(qo,callback){
-        var query=qo.query,area=qo.area;
-        
+        let query=qo.query,area=qo.area;
+
         let page=1; //for now
+
+	let queryString=["q="+encodeURIComponent(query)];
+
+	if (area){
+		queryString.push("lat="+area.lat);
+		queryString.push("lon="+area.lon);
+		queryString.push("maxDistance="+area.distance);
+	}else{
+		queryString.push('page='+page);
+	}
+        
+	var queryPath="/api/_search?"+queryString.join('&');
+	console.log(queryPath);
         http.get({
-            path:"/api/_search/"+encodeURIComponent(query)+"/"+page,
+            path:queryPath,
             hostname:"devsalute-001-site4.etempurl.com",
             method:"GET",
             headers:{
