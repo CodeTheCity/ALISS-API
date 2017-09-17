@@ -11,17 +11,20 @@ app.get('/',function(req, res){
 app.get('/search', function(req, res){
 	// TODO: search by location (lat,lon)
 	// TODO: convert postcode to location
-	if (req.query.q){
-		let q=req.query.q;
-		let lat=req.query.lat;
-		let lon=req.query.lon;
-		console.log("Query: "+q);
-		db.query(q, lat, lon, function(services){
-			var aggregation=parser.aggregateServices(services);
-			res.type('json');
-			res.send(JSON.stringify(aggregation));
-		});
+	var queryobject={};
+	if (req.query.lat&&req.query.lon&&req.query.distance){
+		queryobject.area={lat:req.query.lat,lon:req.query.lon,distance:req.query.distance};
 	}
+	if (req.query.q){
+		queryobject.query=req.query.q;
+	}
+
+	console.log("Query: "+queryobject);
+	db.query(queryobject, function(services){
+		var aggregation=parser.aggregateServices(services);
+		res.type('json');
+		res.send(JSON.stringify(aggregation));
+	});
 });
 
 app.get('/details/:service/:id', function(req, res){
