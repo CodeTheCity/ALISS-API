@@ -15,16 +15,7 @@ module.exports={
 				"twitter":null,
 				"website":null
 			},
-			"location":{
-				"coordinates":{
-					"latitude":null,
-					"longitude":null
-				},
-				"postcode":null,
-				"street":null,
-				"city":null,
-				"country":null
-			}
+			"locations":[]
 		};
 	}
 };

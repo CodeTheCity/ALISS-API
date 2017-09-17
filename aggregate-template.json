@@ -12,14 +12,16 @@
 		"twitter":"",
 		"website":"http://lorem.ipsum.dolor.tld/"
 	},
-	"location":{
-		"coordinates":{
-			"latitude":4,
-			"longitude":4
-		},
-		"postcode":"",
-		"street":"",
-		"city":"",
-		"country":""
-	}
+	"locations":[
+		{
+			"coordinates":{
+				"latitude":4,
+				"longitude":4
+			},
+			"postcode":"",
+			"street":"",
+			"city":"",
+			"country":""
+		}
+	]
 }

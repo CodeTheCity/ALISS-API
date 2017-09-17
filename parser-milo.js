@@ -24,7 +24,7 @@ module.exports={
 					'title':item.title,
 					'description':item.description,
 					'additionalInformation':item.text_bag,
-					'tags':item['main_activities_global-slugs'],
+					'tags':item['main_activities_global'],
 					'contact':{
 						'email':item.email,
 						'phone':item.phone,
@@ -52,7 +52,7 @@ module.exports={
 						street=include(street,item.location_street);
 						city=include(city,item.location_city_county);
 
-						return {
+						return [{
 							'coordinates':{
 								'latitude':latitude,
 								'longitude':longitude
@@ -61,7 +61,7 @@ module.exports={
 							'street':street,
 							'city':city,
 							'country':country
-						};
+						}];
 					})(item)
 				});
 			}else{
