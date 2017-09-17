@@ -32,7 +32,7 @@ module.exports={
 						'twitter':item.twitter,
 						'website':item.website
 					},
-					'location':(function(item){
+					'locations':(function(item){
 						var latitude,longitude,postcode,street,town,county;
 						if (item.geo){
 							latitude=include(latitude,item.geo.latitude);
