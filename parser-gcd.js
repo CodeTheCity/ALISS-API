@@ -28,9 +28,7 @@ module.exports={
 								"longitude":service.field_longitude
 							},
 							"postcode":service.field_postcode,
-							"address":[service.field_street,service.field_address2,service.field_address3].join(' ').trim(),
-							"city":service.field_city,
-							"country":'Scotland'
+							"address":[service.field_street,service.field_address2,service.field_address3,service.field_city].join(' ').trim()
 						}];
 					})(service)
 				});
