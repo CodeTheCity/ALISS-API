@@ -17,8 +17,6 @@
  *
  * */
 
-const http=require('http'),https=require('https');
-
 function Race(callback){
 	this.running=0;
 	this.finished=false;
@@ -49,6 +47,30 @@ var services={
 };
 
 module.exports={
+	getPostcode:function(postcode,callback){
+		https.get({
+			path:"/postcodes/"+encodeURIComponent(postcode.trim()),
+			hostname:"api.postcodes.io",
+			method:"GET",
+			headers:{}
+		},function(res){
+			console.log('Post API Status '+res.statusCode);
+			console.log('Post API Headers '+JSON.stringify(res.headers));
+			let data='';
+			res.on('data',function(chunk){
+				data+=chunk;
+			});
+			res.on('end',function(){
+				try{
+					callback(JSON.parse(data).result);
+				}
+				catch(err){
+					console.error('POST API error '+err);
+					callback({});
+				}
+			});
+		});
+	},
 	details:function(service,id,callback){
 		if (service in services){
 			services[service].getDetails(id,callback);
