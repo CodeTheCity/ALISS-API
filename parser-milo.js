@@ -33,7 +33,7 @@ module.exports={
 						'website':item.website
 					},
 					'location':(function(item){
-						var latitude,longitude,postcode,street,city,country;
+						var latitude,longitude,postcode,street,town,county;
 						if (item.geo){
 							latitude=include(latitude,item.geo.latitude);
 							longitude=include(longitude,item.geo.longitude);
@@ -50,7 +50,8 @@ module.exports={
 
 						postcode=include(postcode,item.location_postcode);
 						street=include(street,item.location_street);
-						city=include(city,item.location_city_county);
+						town=include(town,item.location_area_town);
+						county=include(county,item.location_city_county);
 
 						return [{
 							'coordinates':{
@@ -58,7 +59,7 @@ module.exports={
 								'longitude':longitude
 							},
 							'postcode':postcode,
-							'address':[street,city,country].join(', ').trim()
+							'address':[street,town,postcode,county].filter(r=>{if (r&&r.trim()!='') return true;}).join(', ').trim()
 						}];
 					})(item)
 				});
