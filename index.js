@@ -13,8 +13,10 @@ app.get('/search', function(req, res){
 	// TODO: convert postcode to location
 	if (req.query.q){
 		let q=req.query.q;
+		let lat=req.query.lat;
+		let lon=req.query.lon;
 		console.log("Query: "+q);
-		db.query(q, function(services){
+		db.query(q, lat, lon, function(services){
 			var aggregation=parser.aggregateServices(services);
 			res.type('json');
 			res.send(JSON.stringify(aggregation));

@@ -45,9 +45,15 @@ var services={
 		getDetails:function(id,callback){
 			callback({});
 		},
-		query:function(query,callback){
+		query:function(query,lat,lon,callback){
+			const path = "/api/v2/search/?q="+encodeURIComponent(query);
+			
+			if(lat && lon){
+				// TODO
+			}
+
 			https.get({
-				path:"/api/v2/search/?q="+encodeURIComponent(query),
+				path:path,
 				hostname:"www.aliss.org",
 				method:"GET",
 				headers:{
@@ -76,7 +82,7 @@ var services={
 			// TODO: this
 			callback({});
 		},
-		query:function(query,callback){
+		query:function(query,lat,lon,callback){
 			let page=1; //for now
 			http.get({
 				path:"/api/_search/"+encodeURIComponent(query)+"/"+page,
@@ -132,7 +138,7 @@ var services={
 				});
 			});
 		},
-		query:function(query,callback){
+		query:function(query,lat,lon,callback){
 			var request=https.request({
 				path:"/web-content/milo-organisation/_search",
 				hostname:"50896fdf5c15388f8976945e5582a856.eu-west-1.aws.found.io",
@@ -189,7 +195,7 @@ module.exports={
 			services[service].getDetails(id,callback);
 		}else console.error('Cannot get details; service \''+service+'\' not in services!');
 	},
-	query:function(query,callback){
+	query:function(query, lat, lon, callback){
 		var results={};
 
 		var race=new Race(function(){
@@ -201,7 +207,7 @@ module.exports={
 		for (let service in services){
 			console.log('Querying service '+service+'...');
 			race.start(function(finish){
-				services[service].query(query,function(res){
+				services[service].query(query,lat,lon,function(res){
 					results[service]=res;
 					console.log('Service '+service+' finished.');
 					finish();
