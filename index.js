@@ -9,7 +9,6 @@ app.get('/',function(req, res){
 });
 
 app.get('/search', function(req, res){
-	// TODO: search by location (lat,lon)
 	// TODO: convert postcode to location
 	var queryobject={};
 	if (req.query.lat&&req.query.lon&&req.query.distance){
